@@ -1,0 +1,70 @@
+body {
+  font-family: 'Malgun Gothic', serif;
+  color: #333;
+  line-height: 1.6;
+  background-image: url('../img/fconline.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+.blog-title {
+  font-size: 2.5rem;
+  color: #007bff;
+  font-family: 'Malgun Gothic', serif;
+}
+
+.lead {
+  font-size: 1.25rem;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button {
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+
+.post {
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post h2 {
+  margin-bottom: 10px;
+  font-size: 1.75rem;
+  color: #007bff;
+  font-family: 'Malgun Gothic', serif;
+}
+
+.post p {
+  margin-bottom: 10px;
+  font-size: 1.125rem;
+  color: #333;
+}
+
+.post button {
+  font-size: 0.875rem;
+}

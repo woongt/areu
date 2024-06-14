@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보 확인</title>
+    <link rel="stylesheet" href="./css/page2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>정보 확인</h1>
+        <div class="selected-items">
+            <h3>원하는 팀 컬러</h3>
+            <div id="selectedItemsContainer"></div>
+        </div>
+        <div class="additional-info">
+            <h3>팀 가치</h3>
+            <div id="additionalInfoContainer"></div>
+        </div>
+        <button onclick="goToIndex2()">정보 확인</button>
+    </div>
+    <script>
+        window.onload = function() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            const category = urlParams.get('category');
+            const item = urlParams.get('item');
+            const additionalItem = urlParams.get('additional');
+            const teamValue = urlParams.get('teamValue');
+
+            const selectedItemsContainer = document.getElementById('selectedItemsContainer');
+            const additionalInfoContainer = document.getElementById('additionalInfoContainer');
+
+            if (category) {
+                selectedItemsContainer.innerHTML += `<p><strong>카테고리:</strong> ${category}</p>`;
+            }
+            if (item) {
+                selectedItemsContainer.innerHTML += `<p><strong>항목:</strong> ${item}</p>`;
+            }
+            if (additionalItem) {
+                selectedItemsContainer.innerHTML += `<p><strong>추가 항목:</strong> ${additionalItem}</p>`;
+            }
+            if (teamValue) {
+                additionalInfoContainer.innerHTML += `<p><strong>팀 가치:</strong> ${teamValue}</p>`;
+            }
+        };
+
+        function goToIndex2() {
+            window.location.href = 'index3.html';
+        }
+    </script>
+</body>
+</html>

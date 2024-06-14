@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원하는 팀</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>원하는 팀</h1>
+        <div class="input-container">
+            <select id="categoryDropdown" onchange="updateItems()">
+                <option value="">특성 팀 컬러</option>
+                <option value="클럽">클럽</option>
+                <option value="국가">국가</option>
+            </select>
+            <select id="itemDropdown">
+                <option value="">팀 컬러</option>
+            </select>
+        </div>
+        <div class="additional-items">
+            <h3>원하는 옵션</h3>
+            <div id="additionalItemsContainer">
+                <input type="radio" name="additionalItem" value="양발" id="additionalItem1">
+                <label for="additionalItem1">양발 중심으로</label><br>
+                <input type="radio" name="additionalItem" value="체감" id="additionalItem2">
+                <label for="additionalItem2">체감 많이탐</label><br>
+                <input type="radio" name="additionalItem" value="키" id="additionalItem3">
+                <label for="additionalItem3">피지컬 중요시함</label><br>
+                <label for="teamValue">구성할 팀 가치</label><br>
+                <input type="text" id="teamValue" placeholder="팀 가치 입력">
+            </div>
+        </div>
+        <button onclick="goToPage2()">선택 완료</button>
+    </div>
+    <script>
+        let itemsA = [
+            "AC 밀란", "FC 바르셀로나", "PSV", "나폴리 FC", "뉴캐슬 유나이티드", "라티움", "레스터 시티", "레알 마드리드", "리버풀",
+            "맨체스터 시티", "맨체스터 유나이티드", "바이에른 뮌헨", "바이엘 04 레버쿠젠", "보루시아 도르트문트", "브라이튼 호브 앨비언",
+            "비야레알 CF", "삼프도리아", "셀틱", "스토크 시티", "스포르팅 CP", "아스널", "아약스", "아인트라흐트 프랑크푸르트",
+            "아틀레티코 마드리드", "애스턴 빌라", "애버턴", "올랭피크 마르세유", "울버햄프턴 원더러스", "웨스트 햄 유나이티드", "유벤투스",
+            "인테르", "첼시", "크리스털 팰리스", "토트넘 홋스퍼", "파리 생제르맹", "페예노르트", "풀럼", "피오렌티나", "함부르크 SV"
+        ];
+        
+        let itemsB = [
+            "네덜란드", "노르웨이", "대한민국", "덴마크", "독일", "벨기에", "브라질", "사우디아라비아", "세네갈", "스웨덴", 
+            "스코틀랜드", "스페인", "아르헨티나", "웨일스", "이탈리아", "일본", "잉글랜드", "크로아티아", "포르투갈", "폴란드", 
+            "프랑스"
+        ];
+
+        function updateItems() {
+            const categoryDropdown = document.getElementById('categoryDropdown');
+            const itemDropdown = document.getElementById('itemDropdown');
+            const selectedCategory = categoryDropdown.value;
+
+            itemDropdown.innerHTML = '';
+
+            if (selectedCategory === '클럽') {
+                itemsA.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item
+                    option.textContent = item;
+                    itemDropdown.appendChild(option);
+                });
+            } else if (selectedCategory === '국가') {
+                itemsB.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    itemDropdown.appendChild(option);
+                });
+            }
+        }
+
+        function goToPage2() {
+            const categoryDropdown = document.getElementById('categoryDropdown');
+            const selectedCategory = categoryDropdown.value;
+            const itemDropdown = document.getElementById('itemDropdown');
+            const selectedItem = itemDropdown.value;
+
+            const additionalItemsRadios = document.getElementsByName('additionalItem');
+            let selectedAdditionalItem = '';
+            additionalItemsRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedAdditionalItem = radio.value;
+                }
+            });
+
+            const teamValue = document.getElementById('teamValue').value;
+
+            let queryString = '';
+
+            if (selectedCategory) {
+                queryString += `?category=${selectedCategory}`;
+            }
+            if (selectedItem) {
+                queryString += `${queryString ? '&' : '?'}item=${selectedItem}`;
+            }
+            if (selectedAdditionalItem) {
+                queryString += `${queryString ? '&' : '?'}additional=${selectedAdditionalItem}`;
+            }
+            if (teamValue) {
+                queryString += `${queryString ? '&' : '?'}teamValue=${teamValue}`;
+            }
+
+            if (!selectedCategory && !selectedItem && !selectedAdditionalItem && !teamValue) {
+                alert('카테고리, 항목, 추가 항목 또는 팀 가치를 입력하세요.');
+                return;
+            }
+
+            window.location.href = `page2.html${queryString}`;
+        }
+    </script>
+</body>
+</html>
