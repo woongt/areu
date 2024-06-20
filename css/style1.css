@@ -1,0 +1,95 @@
+.mainbox{
+  width: 700px;
+  padding: 30px;
+  margin: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  background:#eef2f3;
+  border: 5px solid #D7DDE8;
+
+}
+
+h1{
+  font-family: 'Acme', sans-serif;
+  font-size: 35px;
+  text-align: center;
+  font-weight: bold;
+}
+
+h2{
+  font-family: 'Acme', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  font-weight: lighter;
+  color: #282828;
+}
+
+h3{
+  font-family: 'Acme', sans-serif;
+  color: black;
+  text-shadow: 3px 3px 10px #9CECFB;
+  font-size: 17px;
+  border-bottom: 1px solid #D7DDE8;
+}
+
+h5{
+  font-size: 12px;
+  text-align: right;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.sub-box{
+  margin-right: 15px;
+  margin-left: 15px;
+  padding: 10px;
+}
+
+.nobox{
+  font-family: 'Tapestry', cursive;
+  font-size: 35px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.img{
+  display: inline-block; 
+}
+
+.img-box{
+  display: inline-block; 
+  border-style:double;
+}
+
+.sns-img{
+  height: 30px;
+  width: 30px;
+}
+
+.font{
+  font-family: 'Acme', sans-serif;
+  margin-left: 20px;
+  font-size: 14px;
+  display: inline-block; 
+  vertical-align: top;
+  line-height : 150%; 
+}
+
+.text-box{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content:space-between;
+}
+
+.text{
+  font-family: 'Acme', sans-serif;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.year-text{
+  font-family: 'Acme', sans-serif;
+  font-size: 14px;
+}
