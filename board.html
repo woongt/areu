@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>게시판</title>
+<style>
+    body {
+        background-image: url('./img/back.avif');
+        background-size: 2000px 1200px; 
+        background-repeat : no-repeat;
+        background-position: 80% -130px;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .header {
+        background-color: rgb(218, 231, 255);
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        margin-bottom: 20px;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table td, .table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    .num {
+        width: 50px;
+    }
+    .title {
+        width: 300px;
+        cursor: pointer;
+    }
+    .body {
+        text-align: center;
+    }
+    .body .title {
+        text-align: left;
+    }
+    .content {
+        display: none;
+        background-color: #f9c9c9; /* 펼쳐진 부분의 배경색 설정 */
+    }
+    .content td {
+        padding: 10px;
+    }
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 15px;
+        background-color: rgb(164, 199, 255); /* 버튼 배경색 설정 */
+        color: rgb(68, 136, 244); /* 버튼 텍스트 색상 설정 */
+        border: 0;
+        outline: 1.5px rgb(68, 136, 244) solid;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .pagination button:hover {
+        background-color: rgb(27, 76, 155);
+        color: white; /* 마우스 오버 시 텍스트 색상 변경 */
+    }
+    .topright {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .topright button {
+        width: 100px; /* 너비 설정 */
+        height: 40px; /* 높이 설정 */
+        font-size: 15px;
+        border: 0;
+        outline: 1.5px rgb(68, 136, 244) solid;
+        border-radius: 5px;
+        padding-left: 10px;
+        background-color: orange; /* 오렌지 색상 설정 */
+        color: white;
+        cursor: pointer;
+    }
+    .topright button:hover {
+        background-color: rgb(255, 165, 0); /* 마우스 오버 시 색상 변경 */
+    }
+    .bottomright {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+    .bottomright button {
+        width: 100px; /* 너비 설정 */
+        height: 40px; /* 높이 설정 */
+        font-size: 15px;
+        border: 0;
+        outline: 1.5px rgb(68, 136, 244) solid;
+        border-radius: 5px;
+        padding-left: 10px;
+        background-color: orange; /* 오렌지 색상 설정 */
+        color: white;
+        cursor: pointer;
+    }
+    .bottomright button:hover {
+        background-color: rgb(255, 165, 0); /* 마우스 오버 시 색상 변경 */
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>게시판</h2>
+    </div>
+    <table class="table">
+        <tr>
+            <th class="num">번호</th>
+            <th class="title">제목</th>
+            <th>작성자</th>
+            <th>작성날짜</th>
+        </tr>
+        <tbody id="boardBody">
+            <!-- JavaScript를 통해 동적으로 게시글 목록이 추가될 예정 -->
+        </tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+</div>
+<div class="topright">
+    <button onclick="location.href='index2.html'">신청하기</button>
+</div>
+<div class="bottomright">
+    <button onclick="location.href='write.html'">글쓰기</button>
+</div>
+
+<script>
+    var currentPage = 1;
+    var postsPerPage = 10; // 한 페이지당 표시할 게시글 수
+    var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+
+    function loadPage(page) {
+        var startIndex = (page - 1) * postsPerPage;
+        var endIndex = startIndex + postsPerPage;
+        var boardBody = document.getElementById('boardBody');
+        boardBody.innerHTML = '';
+
+        for (var i = startIndex; i < endIndex && i < savedPosts.length; i++) {
+            var post = savedPosts[i];
+            var row = "<tr class='body'>" +
+                      "<td>" + (i + 1) + "</td>" +
+                      "<td class='title' onclick='toggleContent(" + i + ")'>" + post.title + "</td>" +
+                      "<td>" + (post.author || '사용자') + "</td>" +
+                      "<td>" + (post.date || '2024-06-21') + "</td>" +
+                      "</tr>" +
+                      "<tr class='content' id='content" + i + "' style='display: none;'>" +
+                      "<td colspan='4'><strong>글 내용:</strong><br>" + (post.detail || '없음') + "</td>" +
+                      "</tr>";
+            boardBody.innerHTML += row;
+        }
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        var totalPages = Math.ceil(savedPosts.length / postsPerPage);
+        var pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        for (var i = 1; i <= totalPages; i++) {
+            var button = "<button onclick='loadPage(" + i + ")'>" + i + "</button>";
+            pagination.innerHTML += button;
+        }
+    }
+
+    function toggleContent(index) {
+        var content = document.getElementById('content' + index);
+        if (content.style.display === 'none') {
+            content.style.display = 'table-row';
+        } else {
+            content.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPage(currentPage);
+    });
+</script>
+
+</body>
+</html>
