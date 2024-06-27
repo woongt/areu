@@ -6,17 +6,33 @@
 <title>게시판</title>
 <style>
     body {
-        background-image: url('./img/back.avif');
-        background-size: 2000px 1200px; 
-        background-repeat : no-repeat;
-        background-position: 80% -130px;
+        background-color: #4B4B4B; /* 짙은 회백색으로 변경 */
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .main {
+        display: flex;
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px;
+    }
+    .side {
+        width: 200px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        background-image: url('./img/mo.png'); /* 배경 이미지 설정 */
+        background-repeat: repeat; /* 이미지 반복 */
     }
     .container {
-        max-width: 800px;
-        margin: 20px auto;
+        flex-grow: 1;
+        margin: 0 20px;
         padding: 20px;
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
@@ -91,12 +107,12 @@
         outline: 1.5px rgb(68, 136, 244) solid;
         border-radius: 5px;
         padding-left: 10px;
-        background-color: orange; /* 오렌지 색상 설정 */
-        color: white;
+        background-color: lightgray; /* 밝은 회색 설정 */
+        color: gray;
         cursor: pointer;
     }
     .topright button:hover {
-        background-color: rgb(255, 165, 0); /* 마우스 오버 시 색상 변경 */
+        background-color: darkgray; /* 마우스 오버 시 색상 변경 */
     }
     .bottomright {
         position: absolute;
@@ -111,32 +127,38 @@
         outline: 1.5px rgb(68, 136, 244) solid;
         border-radius: 5px;
         padding-left: 10px;
-        background-color: orange; /* 오렌지 색상 설정 */
-        color: white;
+        background-color: lightgray; /* 밝은 회색 설정 */
+        color: gray;
         cursor: pointer;
     }
     .bottomright button:hover {
-        background-color: rgb(255, 165, 0); /* 마우스 오버 시 색상 변경 */
+        background-color: darkgray; /* 마우스 오버 시 색상 변경 */
     }
 </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h2>게시판</h2>
+<div class="main">
+    <div class="side">
     </div>
-    <table class="table">
-        <tr>
-            <th class="num">번호</th>
-            <th class="title">제목</th>
-            <th>작성자</th>
-            <th>작성날짜</th>
-        </tr>
-        <tbody id="boardBody">
-            <!-- JavaScript를 통해 동적으로 게시글 목록이 추가될 예정 -->
-        </tbody>
-    </table>
-    <div class="pagination" id="pagination"></div>
+    <div class="container">
+        <div class="header">
+            <h2>게시판</h2>
+        </div>
+        <table class="table">
+            <tr>
+                <th class="num">번호</th>
+                <th class="title">제목</th>
+                <th>작성자</th>
+                <th>작성날짜</th>
+            </tr>
+            <tbody id="boardBody">
+                <!-- JavaScript를 통해 동적으로 게시글 목록이 추가될 예정 -->
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination"></div>
+    </div>
+    <div class="side">
+    </div>
 </div>
 <div class="topright">
     <button onclick="location.href='index2.html'">신청하기</button>
@@ -147,8 +169,24 @@
 
 <script>
     var currentPage = 1;
-    var postsPerPage = 10; // 한 페이지당 표시할 게시글 수
-    var savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+    var postsPerPage = 15; // 한 페이지당 표시할 게시글 수
+    var savedPosts = JSON.parse(localStorage.getItem('posts')) || [
+        {title: '제목1', author: '작성자1', date: '2024-06-21', detail: '내용1'},
+        {title: '제목2', author: '작성자2', date: '2024-06-22', detail: '내용2'},
+        {title: '제목3', author: '작성자3', date: '2024-06-23', detail: '내용3'},
+        {title: '제목4', author: '작성자4', date: '2024-06-24', detail: '내용4'},
+        {title: '제목5', author: '작성자5', date: '2024-06-25', detail: '내용5'},
+        {title: '제목6', author: '작성자6', date: '2024-06-26', detail: '내용6'},
+        {title: '제목7', author: '작성자7', date: '2024-06-27', detail: '내용7'},
+        {title: '제목8', author: '작성자8', date: '2024-06-28', detail: '내용8'},
+        {title: '제목9', author: '작성자9', date: '2024-06-29', detail: '내용9'},
+        {title: '제목10', author: '작성자10', date: '2024-06-30', detail: '내용10'},
+        {title: '제목11', author: '작성자11', date: '2024-07-01', detail: '내용11'},
+        {title: '제목12', author: '작성자12', date: '2024-07-02', detail: '내용12'},
+        {title: '제목13', author: '작성자13', date: '2024-07-03', detail: '내용13'},
+        {title: '제목14', author: '작성자14', date: '2024-07-04', detail: '내용14'},
+        {title: '제목15', author: '작성자15', date: '2024-07-05', detail: '내용15'}
+    ];
 
     function loadPage(page) {
         var startIndex = (page - 1) * postsPerPage;
